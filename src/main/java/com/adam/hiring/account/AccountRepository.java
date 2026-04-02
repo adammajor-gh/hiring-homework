@@ -1,0 +1,4 @@
+package com.adam.hiring.account;
+
+public class AccountRepository {
+}
