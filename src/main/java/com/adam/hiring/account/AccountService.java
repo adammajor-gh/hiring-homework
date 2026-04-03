@@ -1,7 +1,9 @@
 package com.adam.hiring.account;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -50,5 +52,35 @@ public class AccountService {
                 .orElseThrow(() -> new RuntimeException("Account not found with id: " + id));
         accountRepository.delete(account);
         return account;
+    }
+
+    @Transactional
+    public AccountDto withdraw(Long accountId, BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount must be greater than zero");
+        }
+
+        Account account = accountRepository.findByIdForUpdate(accountId)
+                .orElseThrow(() -> new RuntimeException("Account not found with id: " + accountId));
+
+        account.setBalance(account.getBalance().subtract(amount));
+        Account updatedAccount = accountRepository.save(account);
+
+        return accountMapper.toDto(updatedAccount);
+    }
+
+    @Transactional
+    public AccountDto deposit(Long accountId, BigDecimal amount) {
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Deposit amount must be greater than zero");
+        }
+
+        Account account = accountRepository.findByIdForUpdate(accountId)
+                .orElseThrow(() -> new RuntimeException("Account not found with id: " + accountId));
+
+        account.setBalance(account.getBalance().add(amount));
+        Account updatedAccount = accountRepository.save(account);
+
+        return accountMapper.toDto(updatedAccount);
     }
 }
