@@ -23,6 +23,15 @@ Interactive Solutions: When crafting user-facing features, employ modern ES6 Jav
 never explain the code just write code
 
 ## My prompts
-- env: Java Spring Boot (Java 25) Create a simple "Account" handling CRUD skeleton with entity, DTO, mappers, resources, services, repository The "User" entity has three properties: 
+- env: Java Spring Boot (Java 25) Create a simple "Account" handling CRUD skeleton in the "com.adam.hiring.account" package with entity, DTO, mappers, resources, services, repository The "User" entity has three properties: 
 Name (String), Balance (BigDecimal) Currency (Enum) The "Currency" enum has three values: "EUR", "USD", "HUF"
   - note: After the AI generated the code, I made some error handling and validations by hand. Because based on my experience, the AI can be wrong on these tasks.
+
+- Write a Spring Boot "@Configuration" class named "ExchangeRateApiStub" in the "com.adam.hiring.exchangerate.stub" package.
+Create a WireMockServer bean, running on port 8081, that stubs GET /api/v1/exchanngeRate matching the base query parameter for USD, EUR, HUF.
+The request using a query parameter named "base" (e.g.: ?base=USD) for the currencies.
+Define a hardcoded "Map<String, String>", which is containing the exchange rates for EUR, USD and HUF.
+Configure WireMock Scenario, named "Flaky Exchange - {currency}" for all three currencies.
+Sequence each scenario into 5 steps. The first 4 steps should fail with a 70% chance and return a 503
+The 5th step must always guarantee a 200 OK response with the JSON.
+Delay the responses a random number between 500 and 5000. (milliseconds)
