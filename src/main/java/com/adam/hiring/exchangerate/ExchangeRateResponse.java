@@ -4,6 +4,7 @@ import com.adam.hiring.shared.enums.Currency;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 public record ExchangeRateResponse(
@@ -11,6 +12,6 @@ public record ExchangeRateResponse(
         Currency base,
 
         @NotEmpty(message = "Rates map must not be empty")
-        Map<String, Double> rates
+        Map<Currency, BigDecimal> rates
 ) {
 }

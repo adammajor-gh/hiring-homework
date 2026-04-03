@@ -1,5 +1,6 @@
 package com.adam.hiring.exchangerate;
 
+import com.adam.hiring.shared.enums.Currency;
 import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ExchangeRateService {
     }
 
     @Retry(name = "exchangeRetry")
-    public ExchangeRateResponse getExchangeRates(String base) {
+    public ExchangeRateResponse getExchangeRates(Currency base) {
         logger.info("Initiating request to Exchange API. Base: {}", base);
 
         try {
