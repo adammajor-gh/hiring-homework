@@ -35,3 +35,6 @@ Configure WireMock Scenario, named "Flaky Exchange - {currency}" for all three c
 Sequence each scenario into 5 steps. The first 4 steps should fail with a 70% chance and return a 503
 The 5th step must always guarantee a 200 OK response with the JSON.
 Delay the responses a random number between 500 and 5000. (milliseconds)
+
+- env: Java Spring boot (Java 25)
+I want to achieve the next: I want to multiply two numbers. The numbers data types are BigDecimal. Round two decimals. Keep in mind the best practices of the financial industry. 
