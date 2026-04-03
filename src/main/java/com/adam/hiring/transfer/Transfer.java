@@ -34,16 +34,6 @@ public class Transfer {
     @JoinColumn(name = "destination_account_id", nullable = false)
     private Account destinationAccount;
 
-    @NotNull(message = "Source currency cannot be null")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "source_currency", nullable = false)
-    private Currency sourceCurrency;
-
-    @NotNull(message = "Destination currency cannot be null")
-    @Enumerated(EnumType.STRING)
-    @Column(name = "destination_currency", nullable = false)
-    private Currency destinationCurrency;
-
     @NotNull(message = "Amount cannot be null")
     @Column(nullable = false, precision = 14, scale = 2)
     private BigDecimal amount;
@@ -55,14 +45,6 @@ public class Transfer {
     @NotNull(message = "Converted amount cannot be null")
     @Column(name = "converted_amount", nullable = false, precision = 14, scale = 2)
     private BigDecimal convertedAmount;
-
-    @NotBlank(message = "Status cannot be blank")
-    @Column(nullable = false)
-    private String status;
-
-    @NotBlank(message = "Idempotency key cannot be blank")
-    @Column(name = "idempotency_key", unique = true, nullable = false, updatable = false)
-    private String idempotencyKey;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
