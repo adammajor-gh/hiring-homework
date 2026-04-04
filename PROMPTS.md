@@ -37,4 +37,7 @@ The 5th step must always guarantee a 200 OK response with the JSON.
 Delay the responses a random number between 500 and 5000. (milliseconds)
 
 - env: Java Spring boot (Java 25)
-I want to achieve the next: I want to multiply two numbers. The numbers data types are BigDecimal. Round two decimals. Keep in mind the best practices of the financial industry. 
+I want to achieve the next: I want to multiply two numbers. The numbers data types are BigDecimal. Round two decimals. Keep in mind the best practices of the financial industry.
+
+- Create a simple "Idempotency" handling skeleton in the "com.adam.hiring.idempotency" package with Entity (properties: idempotencyKey(String), apiPath(String), responsePayload(String)), status (Enum: PROCESSING, COMPLETED, FALSE), httpStatusCode(Integer), createdAt(instant), updatedAt(instant)
+Repository, Service (with a checkOrInitiate method, a complete and a fail method).
