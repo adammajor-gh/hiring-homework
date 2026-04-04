@@ -15,6 +15,7 @@ public class ArtemisService {
     }
 
     public void send(String destinationQueue, String message) {
+        logger.debug("Sending message to queue: {}", destinationQueue);
         jmsTemplate.convertAndSend(destinationQueue, message);
         logger.info("Message sent to {}: {}", destinationQueue, message);
     }

@@ -1,6 +1,9 @@
 package com.adam.hiring.account;
 
+import com.adam.hiring.transfer.TransferService;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,6 +16,8 @@ public class AccountService {
 
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
+    private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
+
 
     public AccountService(AccountRepository accountRepository, AccountMapper accountMapper) {
         this.accountRepository = accountRepository;
@@ -56,6 +61,7 @@ public class AccountService {
 
     @Transactional
     public AccountDto withdraw(Long accountId, BigDecimal amount) {
+        logger.debug("Withdrawing {} from account: {}", amount, accountId);
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Withdrawal amount must be greater than zero");
         }
@@ -66,11 +72,16 @@ public class AccountService {
         account.setBalance(account.getBalance().subtract(amount));
         Account updatedAccount = accountRepository.save(account);
 
+        logger.info("Withdraw from account: {}, amount: {} success.", accountId, amount);
+
+
         return accountMapper.toDto(updatedAccount);
     }
 
     @Transactional
     public AccountDto deposit(Long accountId, BigDecimal amount) {
+        logger.debug("Depositing {} to account: {}", amount, accountId);
+
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException("Deposit amount must be greater than zero");
         }
@@ -80,6 +91,8 @@ public class AccountService {
 
         account.setBalance(account.getBalance().add(amount));
         Account updatedAccount = accountRepository.save(account);
+
+        logger.info("Deposit to account: {}, amount: {} success.", accountId, amount);
 
         return accountMapper.toDto(updatedAccount);
     }

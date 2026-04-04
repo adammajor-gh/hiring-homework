@@ -24,7 +24,7 @@ public class TransferMessageListener {
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     public void handleTransferCompleted(TransferCompletedEvent event) {
-        logger.debug("Event received");
+        logger.debug("TrasnferCompletedEvent received");
         try {
             String jsonMessage = objectMapper.writeValueAsString(event.transferDto());
 

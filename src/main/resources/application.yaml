@@ -22,6 +22,10 @@ spring:
     user: artemis
     password: password
 
+logging:
+  level:
+    com.adam.hiring: DEBUG
+
 exchange-rate-api:
   url: http://localhost:8081/api
 
