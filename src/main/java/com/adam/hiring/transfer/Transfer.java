@@ -1,9 +1,7 @@
 package com.adam.hiring.transfer;
 
 import com.adam.hiring.account.Account;
-import com.adam.hiring.shared.enums.Currency;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
