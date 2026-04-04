@@ -47,8 +47,8 @@ public class TransferService {
         BigDecimal convertedAmount = transfer.getAmount();
 
         if (!(transfer.getSourceAccount().getCurrency().equals(transfer.getDestinationAccount().getCurrency()))) {
-            ExchangeRateResponse exchangeRates = exchangeRateService.getExchangeRates(transfer.getDestinationAccount().getCurrency());
-            exchangeRate = exchangeRates.rates().get(transfer.getSourceAccount().getCurrency());
+            ExchangeRateResponse exchangeRates = exchangeRateService.getExchangeRates(transfer.getSourceAccount().getCurrency());
+            exchangeRate = exchangeRates.rates().get(transfer.getDestinationAccount().getCurrency());
             convertedAmount = transfer.getAmount()
                     .multiply(exchangeRate)
                     .setScale(2, RoundingMode.HALF_UP);
