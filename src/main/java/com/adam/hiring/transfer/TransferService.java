@@ -3,6 +3,9 @@ package com.adam.hiring.transfer;
 import com.adam.hiring.account.AccountService;
 import com.adam.hiring.exchangerate.ExchangeRateResponse;
 import com.adam.hiring.exchangerate.ExchangeRateService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
@@ -15,15 +18,18 @@ public class TransferService {
     private final TransferMapper transferMapper;
     private final ExchangeRateService exchangeRateService;
     private final AccountService accountService;
+    private final ApplicationEventPublisher eventPublisher;
 
     public TransferService(TransferRepository transferRepository,
                            TransferMapper transferMapper,
                            ExchangeRateService exchangeRateService,
-                           AccountService accountService) {
+                           AccountService accountService,
+                           ApplicationEventPublisher eventPublisher) {
         this.transferRepository = transferRepository;
         this.transferMapper = transferMapper;
         this.exchangeRateService = exchangeRateService;
         this.accountService = accountService;
+        this.eventPublisher = eventPublisher;
     }
 
     @Transactional
@@ -56,11 +62,14 @@ public class TransferService {
 
         transfer = transferRepository.save(transfer);
 
-        return new TransferDto(
+        TransferDto resultDto = new TransferDto(
                 transfer.getSourceAccount().getId(),
                 transfer.getDestinationAccount().getId(),
                 transfer.getAmount(),
                 true
         );
+
+        eventPublisher.publishEvent(new TransferCompletedEvent(resultDto));
+        return resultDto;
     }
 }

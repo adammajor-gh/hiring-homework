@@ -16,6 +16,11 @@ spring:
     console:
       enabled: true
       path: /h2-console
+  artemis:
+    mode: native
+    broker-url: tcp://localhost:61616
+    user: artemis
+    password: password
 
 exchange-rate-api:
   url: http://localhost:8081/api
