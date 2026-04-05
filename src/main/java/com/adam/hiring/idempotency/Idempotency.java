@@ -20,12 +20,18 @@ public class Idempotency {
     @Column(name = "idempotency_key", nullable = false, unique = true, updatable = false)
     private String idempotencyKey;
 
+    @Version
+    private Long version;
+
     @Column(name = "api_path", nullable = false, updatable = false)
     private String apiPath;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private IdempotencyStatus status;
+
+    @Column(name = "request_hash", nullable = false, updatable = false)
+    private String requestHash;
 
     @Column(name = "response_payload", columnDefinition = "TEXT")
     private String responsePayload;

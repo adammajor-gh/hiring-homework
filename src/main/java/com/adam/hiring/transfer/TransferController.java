@@ -2,6 +2,7 @@ package com.adam.hiring.transfer;
 
 import com.adam.hiring.idempotency.Idempotency;
 import com.adam.hiring.idempotency.IdempotencyService;
+import com.adam.hiring.shared.util.CryptoUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
@@ -9,6 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Optional;
 
 @RestController
@@ -30,9 +35,10 @@ public class TransferController {
     @PostMapping
     public ResponseEntity<?> transfer(
             @RequestHeader("X-Idempotency-Key") String idempotencyKey,
-            @Valid @RequestBody TransferDto transferDto) throws JsonProcessingException {
+            @Valid @RequestBody TransferDto transferDto) throws JsonProcessingException, NoSuchAlgorithmException {
 
-        Optional<Idempotency> cachedResponse = idempotencyService.checkOrInitiate(idempotencyKey, "/api/transfers");
+        String requestHash = generateHash(transferDto);
+        Optional<Idempotency> cachedResponse = idempotencyService.checkOrInitiate(idempotencyKey, "/api/transfers", requestHash);
 
         if (cachedResponse.isPresent()) {
             Idempotency idempotency = cachedResponse.get();
@@ -49,5 +55,12 @@ public class TransferController {
             idempotencyService.fail(idempotencyKey);
             throw e;
         }
+    }
+
+    private String generateHash(TransferDto dto) throws JsonProcessingException, NoSuchAlgorithmException {
+        String json = objectMapper.writeValueAsString(dto);
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(json.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(hash);
     }
 }
