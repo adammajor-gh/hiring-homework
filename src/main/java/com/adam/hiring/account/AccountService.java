@@ -51,11 +51,11 @@ public class AccountService {
         }).orElseThrow(() -> new RuntimeException("Account not found with id " + id));
     }
 
-    public Account deleteAccount(Long id) {
+    public AccountDto deleteAccount(Long id) {
         Account account = accountRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Account not found with id: " + id));
         accountRepository.delete(account);
-        return account;
+        return accountMapper.toDto(account);
     }
 
     @Transactional
