@@ -27,7 +27,7 @@ public class Account {
 
     @NotNull(message = "Balance cannot be null")
     @Column(nullable = false, precision = 14, scale = 2)
-    //TODO: Negative balance is allowed? If not, we should use @PositiveOrZero annotation too
+    @PositiveOrZero(message = "Balance cannot be negative")
     private BigDecimal balance;
 
     @NotNull(message = "Currency cannot be null")

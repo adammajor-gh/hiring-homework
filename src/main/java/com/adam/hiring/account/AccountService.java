@@ -69,6 +69,11 @@ public class AccountService {
         Account account = accountRepository.findByIdForUpdate(accountId)
                 .orElseThrow(() -> new RuntimeException("Account not found with id: " + accountId));
 
+        if (account.getBalance().compareTo(amount) < 0) {
+            logger.warn("Insufficient funds. Account: {}, Attempted: {}, Balance: {}", accountId, amount, account.getBalance());
+            throw new IllegalStateException("Insufficient funds, balance: " + account.getBalance());
+        }
+
         account.setBalance(account.getBalance().subtract(amount));
         Account updatedAccount = accountRepository.save(account);
 
