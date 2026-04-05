@@ -13,7 +13,7 @@ import java.util.Map;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 @Configuration
-@Profile("dev")
+@Profile("!test")
 public class ExchangeRateApiStub {
 
     @Value("${wiremock.port:8081}")

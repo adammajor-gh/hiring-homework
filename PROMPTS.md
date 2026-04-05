@@ -41,3 +41,9 @@ I want to achieve the next: I want to multiply two numbers. The numbers data typ
 
 - Create a simple "Idempotency" handling skeleton in the "com.adam.hiring.idempotency" package with Entity (properties: idempotencyKey(String), apiPath(String), responsePayload(String)), status (Enum: PROCESSING, COMPLETED, FALSE), httpStatusCode(Integer), createdAt(instant), updatedAt(instant)
 Repository, Service (with a checkOrInitiate method, a complete and a fail method).
+
+- In the TransferController, generate a private method, which can create an SHA-256 hash from the transferDto
+
+- (For External AI service, system prompt not used) Which is the most suitable HTTP status code, when an idempotency key is reused for a different request?
+
+- In the test directory com.adam.hiring.exchangerate package, create an ExchangeRateServiceIntegrationTest java class and create a simple skeleton for integration test, which uses WireMockServer.
