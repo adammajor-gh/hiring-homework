@@ -2,7 +2,6 @@ package com.adam.hiring.transfer;
 
 import com.adam.hiring.idempotency.Idempotency;
 import com.adam.hiring.idempotency.IdempotencyService;
-import com.adam.hiring.shared.util.CryptoUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;

@@ -1,7 +1,6 @@
 package com.adam.hiring.account;
 
-import com.adam.hiring.transfer.TransferService;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
