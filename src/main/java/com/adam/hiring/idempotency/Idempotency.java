@@ -30,7 +30,7 @@ public class Idempotency {
     @Column(nullable = false)
     private IdempotencyStatus status;
 
-    @Column(name = "request_hash", nullable = false, updatable = false)
+    @Column(name = "request_hash", nullable = false)
     private String requestHash;
 
     @Column(name = "response_payload", columnDefinition = "TEXT")
