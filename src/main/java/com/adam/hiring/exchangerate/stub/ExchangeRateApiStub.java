@@ -37,8 +37,7 @@ public class ExchangeRateApiStub {
                 String currentState = (i == 1) ? Scenario.STARTED : currency + "_Request_" + i;
                 String nextState = (i == 5) ? Scenario.STARTED : currency + "_Request_" + (i + 1);
 
-                // 70% chance to fail on the first 4 attempts, the 5th attempt will be success.
-                boolean shouldFail = (i < 5) && (Math.random() < 0.70);
+                boolean shouldFail = (i < 5);
 
                 if (shouldFail) {
                     server.stubFor(get(urlPathEqualTo("/api/v1/exchangeRate"))
